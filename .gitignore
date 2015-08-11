@@ -1,0 +1,17 @@
+/.project
+/.classpath
+/.settings
+/bin
+/jar
+/src/com/clusterpoint/api/response/alternatives
+/src/com/clusterpoint/api/response/begintransaction
+/src/com/clusterpoint/api/response/listfacets
+/src/com/clusterpoint/api/response/listlastretrievefirst
+/src/com/clusterpoint/api/response/listpaths
+/src/com/clusterpoint/api/response/listwords
+/src/com/clusterpoint/api/response/lookup
+/src/com/clusterpoint/api/response/modify
+/src/com/clusterpoint/api/response/search
+/src/com/clusterpoint/api/response/status
+/src/com/clusterpoint/api/response/searchdelete
+/src/com/clusterpoint/api/net/proto/CPSRequestResponse.java

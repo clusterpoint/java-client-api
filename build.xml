@@ -1,118 +1,120 @@
 <?xml version="1.0"?>
-
 <project basedir="." default="full">
-  <!-- set protoc path  -->
-  <property name="protoc.path" value="/usr/local/bin/protoc"/>
-  <!-- set classpath for compiling and running application  -->
-  <path id="classpath">
-    <pathelement location="."/>
-    <pathelement location="bin"/>
-  	<fileset dir="${basedir}/lib" includes="**/*.jar" />
-  </path>
-  
-  <!-- clean compiled class files and generated code+binding -->
-  <target name="clean">
-    <delete quiet="true" dir="${basedir}/bin"/>
-  	<delete quiet="true" dir="${basedir}/jar"/>
-  </target>
-  
-  <!-- compile the classes -->
-  <target name="compile">
-    <echo message="Compiling Java source code"/>
-    <delete quiet="true" dir="${basedir}/bin"/>
-    <mkdir dir="${basedir}/bin"/>
-    <javac srcdir="${basedir}/src" destdir="${basedir}/bin" debug="on" includeJavaRuntime="true">
-      <classpath refid="classpath"/>
-    </javac>
-  </target>  
-	
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-	  <classpath>
-	  	 <fileset dir="lib/ant-contrib/lib" includes="*.jar" />
-	  </classpath>
-	</taskdef>
+    <!-- set protoc path  -->
+    <property name="protoc.path" value="/usr/local/bin/protoc"/>
+    <!-- set classpath for compiling and running application  -->
+    <path id="classpath">
+        <pathelement location="."/>
+        <pathelement location="bin"/>
+        <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+    </path>
 
-	
-	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
-	  <classpath>
-	    <fileset dir="lib/jaxb/lib" includes="*.jar" />
-	  </classpath>
-	</taskdef>
-	
-	<target name="mxjc">
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSLookupResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSLookupResponse.xjb"/>
-		</xjc>	
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSSearchResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSSearchResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSStatusResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSStatusResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSModifyResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSModifyResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSAlternativesResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSAlternativesResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSListFacetsResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSListFacetsResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSListLastRetrieveFirstResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSListLastRetrieveFirstResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSListPathsResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSListPathsResponse.xjb"/>
-		</xjc>
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSListWordsResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSListWordsResponse.xjb"/>
-		</xjc>	
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSSearchDeleteResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSSearchDeleteResponse.xjb"/>
-		</xjc>	
-		<xjc destdir="src" removeOldOutput="yes">
-			<schema dir="${basedir}/jabx/mapping" includes="CPSBeginTransactionResponse.xsd"/> 
-			<binding dir="${basedir}/jabx/mapping" includes="CPSBeginTransactionResponse.xjb"/>
-		</xjc>						
-		<replace dir="src">
-		  <include name="**/CPS*Content.java"/>
-		  <include name="**/CPS*Reply.java"/>		  
-		  <replacefilter token="@XmlRootElement(name = &quot;reply&quot;)" value="@XmlRootElement(name = &quot;reply&quot;, namespace=&quot;www.clusterpoint.com&quot;)"/>
-		  <replacefilter token="@XmlRootElement(name = &quot;content&quot;)" value="@XmlRootElement(name = &quot;content&quot;, namespace=&quot;www.clusterpoint.com&quot;)"/>
-		</replace>
-	</target>
-	
-	<target name="protoc">
-		<exec executable="${protoc.path}">
-		<!-- <exec executable="/usr/local/bin/protoc"> -->
-			<arg value="--proto_path=${basedir}/resources"/>
-			<arg value="--java_out=${basedir}/src"/>
-			<arg value="${basedir}/resources/cpsreqresp.proto"/>
-		</exec>
-		<eclipse.refreshLocal resource="${basedir}/src" depth="infinite"/>
-	</target>
-	
-	<target name="jarit" depends="clean,protoc,mxjc,compile">
-		<mkdir dir="${basedir}/jar"/>
-		<jar destfile="${basedir}/jar/java-client-api.jar" basedir="${basedir}/bin">
-			<zipgroupfileset dir="lib" includes="protobuf-java-2.4.0a.jar" /> 
-			<manifest>
-		        <attribute name="Manifest-Version" value="2.0.2"/>
-				<attribute name="Created-By" value="Clusterpoint Ltd"/>
-		    </manifest>
-		</jar>
-	</target>
+    <!-- clean compiled class files and generated code+binding -->
+    <target name="clean">
+        <delete quiet="true" dir="${basedir}/bin"/>
+        <delete quiet="true" dir="${basedir}/jar"/>
+    </target>
 
-  <!-- compile, generate, compile binding, run test -->
-  <target name="full" depends="clean,protoc,mxjc,compile,jarit"/>
+    <!-- compile the classes -->
+    <target name="compile">
+        <echo message="Compiling Java source code"/>
+        <delete quiet="true" dir="${basedir}/bin"/>
+        <mkdir dir="${basedir}/bin"/>
+        <!-- <javac compiler="javac1.7" target="1.7" srcdir="${basedir}/src" destdir="${basedir}/bin" debug="on" includeantruntime="false"> -->
+        <javac compiler="javac1.7" target="1.7" srcdir="${basedir}/src" destdir="${basedir}/bin" debug="on" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="print-version">
+        <echo message="Java/JVM version: ${ant.java.version}"/>
+        <echo message="Java/JVM detail version: ${java.version}"/>
+    </target>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <fileset dir="lib/ant-contrib/lib" includes="*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+        <classpath>
+            <fileset dir="lib/jaxb/lib" includes="*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="mxjc">
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSLookupResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSLookupResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSSearchResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSSearchResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSStatusResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSStatusResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSModifyResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSModifyResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSAlternativesResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSAlternativesResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSListFacetsResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSListFacetsResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSListLastRetrieveFirstResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSListLastRetrieveFirstResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSListPathsResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSListPathsResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSListWordsResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSListWordsResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSSearchDeleteResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSSearchDeleteResponse.xjb"/>
+        </xjc>
+        <xjc destdir="src" removeOldOutput="yes">
+            <schema dir="${basedir}/jabx/mapping" includes="CPSBeginTransactionResponse.xsd"/>
+            <binding dir="${basedir}/jabx/mapping" includes="CPSBeginTransactionResponse.xjb"/>
+        </xjc>
+        <replace dir="src">
+            <include name="**/CPS*Content.java"/>
+            <include name="**/CPS*Reply.java"/>
+            <replacefilter token="@XmlRootElement(name = &quot;reply&quot;)" value="@XmlRootElement(name = &quot;reply&quot;, namespace=&quot;www.clusterpoint.com&quot;)"/>
+            <replacefilter token="@XmlRootElement(name = &quot;content&quot;)" value="@XmlRootElement(name = &quot;content&quot;, namespace=&quot;www.clusterpoint.com&quot;)"/>
+        </replace>
+    </target>
+
+    <target name="protoc">
+        <exec executable="${protoc.path}">
+            <arg value="--proto_path=${basedir}/resources"/>
+            <arg value="--java_out=${basedir}/src"/>
+            <arg value="${basedir}/resources/cpsreqresp.proto"/>
+        </exec>
+    </target>
+
+    <target name="jarit" depends="clean,protoc,mxjc,compile">
+        <mkdir dir="${basedir}/jar"/>
+        <jar destfile="${basedir}/jar/java-client-api.jar" basedir="${basedir}/bin">
+            <zipgroupfileset dir="lib" includes="protobuf-java-2.4.0a.jar"/>
+            <manifest>
+                <attribute name="Manifest-Version" value="2.0.2"/>
+                <attribute name="Created-By" value="Clusterpoint Ltd"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- compile, generate, compile binding, run test -->
+    <target name="full" depends="clean,protoc,mxjc,compile,print-version,jarit"/>
 </project>

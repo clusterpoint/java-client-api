@@ -95,12 +95,11 @@ public class CPSRequest {
 	*/
 	public String getRequestXml(String docRootXpath, String[] docIDXpath, Map<String, String[]> envelopeParams) throws TransformerFactoryConfigurationError, Exception
 	{
-		long timeStart = System.currentTimeMillis();
+//		long timeStart = System.currentTimeMillis();
 		DocumentBuilderFactory factory = _tlDocumentBuilderFactory.get();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		
-//		System.out.println("+1+: " + ((System.currentTimeMillis() - timeStart)
-//				/ (float) 1000));
+//		System.out.println("+1+: " + ((System.currentTimeMillis() - timeStart) / (float) 1000));
 		
 		_requestDom = builder.newDocument();
 		Element root = _requestDom.createElementNS("www.clusterpoint.com", "cps:request");
