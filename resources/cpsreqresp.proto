@@ -1,0 +1,35 @@
+option java_package = "com.clusterpoint.api.net.proto";
+option java_outer_classname = "CPSRequestResponse";
+
+// Passive data structure that represents client request
+message CPSRequest {
+  // Binary content of the message
+  optional CPSMessage rcv_message = 1;
+  optional CPSMessage snd_message = 2;
+
+  // Thread that is processing the request.
+  optional int64 thread_id = 3;
+
+  // Log of when different phases started.
+  message Times {
+    optional string received = 1;
+    optional string start_process = 2;
+    optional string finish_process = 3;
+  }
+
+  optional Times times = 4;
+  
+  optional string client_address = 6;
+  optional int32 client_port = 7;
+}
+
+message CPSMessage
+{
+	optional bytes data = 1;
+	optional string recipient = 2;
+	optional string remote_address = 3;
+	optional bool is_external = 4;
+	optional bytes error = 5;
+	optional bool is_hi_prior = 6 [default = false];
+	optional int64 conn_trans_id = 7 [default = -1];
+}

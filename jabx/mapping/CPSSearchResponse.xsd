@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0"
+	elementFormDefault="qualified">
+	<xs:element name="content">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="results" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any processContents="skip" maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="aggregate" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="query" type="xs:string" minOccurs="1" maxOccurs="1"/>
+							<xs:element name="data" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:any processContents="skip" maxOccurs="unbounded" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>			
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="hits" type="xs:int" minOccurs="0" />
+				<xs:element name="found" type="xs:int" minOccurs="0" />
+				<xs:element name="from" type="xs:int" minOccurs="0" />
+				<xs:element name="to" type="xs:int" minOccurs="0" />
+				<xs:element name="more" type="xs:string" minOccurs="0" />
+				<xs:element ref="facet" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="facet">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="term" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType mixed="true">
+						<xs:attribute name="hits" type="xs:int" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="path" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

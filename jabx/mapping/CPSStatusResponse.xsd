@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="content"> 
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version" type="xs:string" minOccurs="0"/>
+        <xs:element ref="index" minOccurs="0"/>
+        <xs:element ref="repository" minOccurs="0"/>
+        <xs:element name="quotient" type="xs:int" minOccurs="0"/>
+        <xs:element name="license" type="xs:string" minOccurs="0"/>
+        <xs:element ref="auth_cache" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="index">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="status" type="xs:string" minOccurs="0"/>
+        <xs:element name="index_speed" type="xs:string" minOccurs="0"/>
+        <xs:element name="memory_pool_usage" type="xs:int" minOccurs="0"/>
+        <xs:element name="total_words" type="xs:int" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="repository">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="documents" type="xs:int" minOccurs="0"/>
+        <xs:element name="data_size" type="xs:int" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="auth_cache">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="seconds" type="xs:float" minOccurs="0"/>
+        <xs:element name="size" type="xs:int" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
