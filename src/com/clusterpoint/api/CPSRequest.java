@@ -310,7 +310,7 @@ public class CPSRequest {
 	 *  containing the nodes of the parsed XML.
 	 * @param doc
 	 * @param fragment
-	 * @return
+	 * @return DocumentFragment
 	 */
     private static DocumentFragment parseXml(Document doc,String fragment) {
         // Wrap the fragment in an arbitrary element

@@ -1,0 +1,12 @@
+Clusterpoint JAVA API
+
+JAR file make
+
+Run from API root path
+ant full
+
+
+API documentation generator instruction.
+
+Run from API root path
+    ant -f ./javadoc.xml

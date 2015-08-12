@@ -3,6 +3,7 @@
 /.settings
 /bin
 /jar
+/doc
 /src/com/clusterpoint/api/response/alternatives
 /src/com/clusterpoint/api/response/begintransaction
 /src/com/clusterpoint/api/response/listfacets
