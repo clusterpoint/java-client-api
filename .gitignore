@@ -16,3 +16,4 @@
 /src/com/clusterpoint/api/response/status
 /src/com/clusterpoint/api/response/searchdelete
 /src/com/clusterpoint/api/net/proto/CPSRequestResponse.java
+build.properties
